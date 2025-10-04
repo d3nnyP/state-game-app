@@ -8,6 +8,7 @@ import {
   FlatList,
   Alert,
   RefreshControl,
+  Platform,
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS, SPACING } from '../utils/constants';
@@ -172,7 +173,10 @@ export function GameHistoryScreen({ onBack }: GameHistoryScreenProps) {
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
-        <View style={[styles.header, { paddingTop: insets.top + SPACING.xs }]}>
+        <View style={[styles.header, { 
+          paddingTop: Platform.OS === 'ios' ? insets.top - 40 : insets.top - 10,
+          marginTop: Platform.OS === 'ios' ? -40 : -10
+        }]}>
           <TouchableOpacity onPress={onBack} style={styles.backButton}>
             <Text style={styles.backButtonText}>← Back</Text>
           </TouchableOpacity>
@@ -189,7 +193,10 @@ export function GameHistoryScreen({ onBack }: GameHistoryScreenProps) {
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
-        <View style={[styles.header, { paddingTop: insets.top + SPACING.xs }]}>
+        <View style={[styles.header, { 
+          paddingTop: Platform.OS === 'ios' ? insets.top - 40 : insets.top - 10,
+          marginTop: Platform.OS === 'ios' ? -40 : -10
+        }]}>
           <TouchableOpacity onPress={onBack} style={styles.backButton}>
             <Text style={styles.backButtonText}>← Back</Text>
           </TouchableOpacity>

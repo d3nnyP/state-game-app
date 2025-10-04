@@ -8,6 +8,7 @@ import {
   FlatList,
   TextInput,
   Alert,
+  Platform,
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS, SPACING, US_STATES } from '../utils/constants';
@@ -149,7 +150,10 @@ export function ActiveGameScreen({ onBack }: ActiveGameScreenProps) {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
       
-      <View style={[styles.header, { paddingTop: insets.top + SPACING.xs }]}>
+      <View style={[styles.header, { 
+        paddingTop: Platform.OS === 'ios' ? insets.top - 40 : insets.top - 10,
+        marginTop: Platform.OS === 'ios' ? -40 : -10
+      }]}>
         <TouchableOpacity onPress={onBack} style={styles.backButton}>
           <Text style={styles.backButtonText}>← Back</Text>
         </TouchableOpacity>
