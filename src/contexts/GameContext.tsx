@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { Game, SpottedState } from '../models/types';
 import DatabaseService from '../services/DatabaseService';
 
-interface GameContextType {
+export interface GameContextType {
   currentGame: Game | null;
   spottedStates: SpottedState[];
   allGames: Game[];
@@ -75,13 +75,16 @@ export function GameProvider({ children }: GameProviderProps) {
       
       // Deactivate current game if exists
       if (currentGame) {
-        await db.updateGame({ ...currentGame, isActive: false });
+        await db.updateGame({ ...currentGame, isComplete: true });
       }
 
       const newGame: Omit<Game, 'id'> = {
         name,
-        createdAt: Date.now(),
-        isActive: true,
+        startDate: new Date().toISOString(),
+        startLocation: '',
+        destination: '',
+        isComplete: false,
+        createdAt: new Date().toISOString(),
       };
 
       const game = await db.createGame(newGame);
@@ -110,7 +113,7 @@ export function GameProvider({ children }: GameProviderProps) {
         const spottedState: Omit<SpottedState, 'id'> = {
           gameId: currentGame.id,
           stateCode,
-          spottedAt: Date.now(),
+          spottedAt: new Date().toISOString(),
         };
         
         const newSpottedState = await db.addSpottedState(spottedState);
@@ -159,7 +162,7 @@ export function GameProvider({ children }: GameProviderProps) {
       
       // Deactivate current game if exists
       if (currentGame) {
-        await db.updateGame({ ...currentGame, isActive: false });
+        await db.updateGame({ ...currentGame, isComplete: true });
       }
 
       // Find the game to resume

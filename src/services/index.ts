@@ -1,5 +1,2 @@
-export { GameService } from './GameService';
-export { GameCompletionService } from './GameCompletionService';
-export type { CreateGameData, GameState } from './GameService';
-export type { GameCompletionEvent, CompletionStats } from './GameCompletionService';
-export { AchievementLevel } from './GameCompletionService';
+// Services are now integrated into GameContext
+// This file is kept for future service exports if needed

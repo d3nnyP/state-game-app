@@ -1,5 +1,5 @@
-import { DatabaseService } from '../database/DatabaseService';
-import { DatabaseMigrations } from '../database/DatabaseMigrations';
+import DatabaseService from '../services/DatabaseService';
+import { DatabaseMigrations } from '../services/DatabaseService';
 import { GameRepository } from '../repositories/GameRepository';
 import { SpottedStateRepository } from '../repositories/SpottedStateRepository';
 import { Game, SpottedState } from '../models/types';

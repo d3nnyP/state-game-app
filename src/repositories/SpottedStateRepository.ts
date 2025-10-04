@@ -1,4 +1,4 @@
-import { DatabaseService } from '../database/DatabaseService';
+import DatabaseService from '../services/DatabaseService';
 import { SpottedState, GameProgress } from '../models/types';
 
 export class SpottedStateRepository {

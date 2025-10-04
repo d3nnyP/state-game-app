@@ -22,12 +22,12 @@ interface GameItemProps {
   game: Game;
   onResume: (gameId: string) => void;
   onDelete: (gameId: string) => void;
-  isActive: boolean;
+  isComplete: boolean;
 }
 
-function GameItem({ game, onResume, onDelete, isActive }: GameItemProps) {
-  const formatDate = (timestamp: number) => {
-    const date = new Date(timestamp);
+function GameItem({ game, onResume, onDelete, isComplete }: GameItemProps) {
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
@@ -35,8 +35,8 @@ function GameItem({ game, onResume, onDelete, isActive }: GameItemProps) {
     });
   };
 
-  const formatTime = (timestamp: number) => {
-    const date = new Date(timestamp);
+  const formatTime = (dateString: string) => {
+    const date = new Date(dateString);
     return date.toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
@@ -44,9 +44,9 @@ function GameItem({ game, onResume, onDelete, isActive }: GameItemProps) {
   };
 
   const getGameStatus = () => {
-    if (game.completedAt) {
+    if (game.endDate) {
       return { text: 'Completed', color: COLORS.success || '#34C759', icon: '✅' };
-    } else if (isActive) {
+    } else if (isComplete) {
       return { text: 'Active', color: COLORS.primary, icon: '▶️' };
     } else {
       return { text: 'Incomplete', color: COLORS.textSecondary, icon: '⏸️' };
@@ -78,10 +78,10 @@ function GameItem({ game, onResume, onDelete, isActive }: GameItemProps) {
   };
 
   return (
-    <View style={[styles.gameItem, isActive && styles.activeGameItem]}>
+    <View style={[styles.gameItem, isComplete && styles.activeGameItem]}>
       <View style={styles.gameHeader}>
         <View style={styles.gameInfo}>
-          <Text style={[styles.gameName, isActive && styles.activeGameName]}>
+          <Text style={[styles.gameName, isComplete && styles.activeGameName]}>
             {game.name}
           </Text>
           <View style={styles.statusContainer}>
@@ -92,7 +92,7 @@ function GameItem({ game, onResume, onDelete, isActive }: GameItemProps) {
           </View>
         </View>
         <View style={styles.gameActions}>
-          {!game.completedAt && !isActive && (
+          {!game.endDate && !isComplete && (
             <TouchableOpacity style={styles.resumeButton} onPress={handleResume}>
               <Text style={styles.resumeButtonText}>Resume</Text>
             </TouchableOpacity>
@@ -107,9 +107,9 @@ function GameItem({ game, onResume, onDelete, isActive }: GameItemProps) {
         <Text style={styles.gameDate}>
           Created: {formatDate(game.createdAt)} at {formatTime(game.createdAt)}
         </Text>
-        {game.completedAt && (
+        {game.endDate && (
           <Text style={styles.completionDate}>
-            Completed: {formatDate(game.completedAt)} at {formatTime(game.completedAt)}
+            Completed: {formatDate(game.endDate)} at {formatTime(game.endDate)}
           </Text>
         )}
       </View>
@@ -153,14 +153,14 @@ export function GameHistoryScreen({ onBack }: GameHistoryScreenProps) {
       game={item}
       onResume={handleResume}
       onDelete={handleDelete}
-      isActive={currentGame?.id === item.id}
+      isComplete={currentGame?.id === item.id}
     />
   );
 
   const getGameStats = () => {
     const totalGames = allGames.length;
-    const completedGames = allGames.filter(game => game.completedAt).length;
-    const activeGames = allGames.filter(game => game.isActive).length;
+    const completedGames = allGames.filter(game => game.endDate).length;
+    const activeGames = allGames.filter(game => !game.isComplete).length;
     
     return { totalGames, completedGames, activeGames };
   };

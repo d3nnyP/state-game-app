@@ -51,7 +51,7 @@ export function ActiveGameScreen({ onBack }: ActiveGameScreenProps) {
 
   // Auto-complete game when all states are spotted
   useEffect(() => {
-    if (spottedCount === totalCount && currentGame && !currentGame.completedAt) {
+    if (spottedCount === totalCount && currentGame && !currentGame.endDate) {
       Alert.alert(
         '🎉 Congratulations!',
         'You found all 50 state license plates! Your game has been completed.',

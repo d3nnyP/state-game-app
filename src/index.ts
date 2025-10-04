@@ -1,26 +1,11 @@
 // Main exports for the State Game App
 // This file provides a clean API for all the core functionality
 
-// Services
-export { GameService, GameCompletionService } from './services';
-export type { CreateGameData, GameState, GameCompletionEvent, CompletionStats } from './services';
-export { AchievementLevel } from './services';
+// Services are now integrated into GameContext
 
 // Contexts
-export { GameManagerProvider, useGameManager } from './contexts';
-export type { GameManagerContextType, GameManagerState } from './contexts';
-
-// Hooks
-export { 
-  useStateToggle, 
-  useStateList, 
-  useGameProgress, 
-  useStateSearch, 
-  useStateFilter,
-  useGameCompletion,
-  useCompletionCelebration,
-  useAchievements
-} from './hooks';
+export { GameProvider, useGame } from './contexts';
+export type { GameContextType } from './contexts';
 
 // Models
 export type { 
@@ -38,10 +23,7 @@ export { StateRegion } from './utils/StateListManager';
 export { US_STATES, COLORS, SPACING, APP_CONFIG, DATABASE_CONFIG } from './utils/constants';
 
 // Database
-export { DatabaseService } from './database/DatabaseService';
-export { DatabaseManager } from './database/DatabaseManager';
-export { GameRepository } from './repositories/GameRepository';
-export { SpottedStateRepository } from './repositories/SpottedStateRepository';
+export { default as DatabaseService } from './services/DatabaseService';
 
 // Screens
 export { 
@@ -50,7 +32,3 @@ export {
   ActiveGameScreen, 
   GameHistoryScreen 
 } from './screens';
-
-// Navigation
-export { AppNavigator, App } from './navigation';
-export type { RootStackParamList } from './navigation';

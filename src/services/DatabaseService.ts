@@ -75,7 +75,7 @@ class DatabaseService {
 
     await this.db.executeSql(
       'INSERT INTO games (id, name, created_at, completed_at, is_active) VALUES (?, ?, ?, ?, ?)',
-      [id, game.name, game.createdAt, game.completedAt || null, game.isActive ? 1 : 0]
+      [id, game.name, game.createdAt, game.endDate || null, game.isComplete ? 0 : 1]
     );
 
     return newGame;
@@ -96,9 +96,12 @@ class DatabaseService {
     return {
       id: row.id,
       name: row.name,
+      startDate: row.created_at,
+      endDate: row.completed_at,
+      startLocation: '',
+      destination: '',
+      isComplete: row.is_active === 0,
       createdAt: row.created_at,
-      completedAt: row.completed_at,
-      isActive: row.is_active === 1,
     };
   }
 
@@ -115,9 +118,12 @@ class DatabaseService {
       games.push({
         id: row.id,
         name: row.name,
+        startDate: row.created_at,
+        endDate: row.completed_at,
+        startLocation: '',
+        destination: '',
+        isComplete: row.is_active === 0,
         createdAt: row.created_at,
-        completedAt: row.completed_at,
-        isActive: row.is_active === 1,
       });
     }
 
@@ -129,7 +135,7 @@ class DatabaseService {
 
     await this.db.executeSql(
       'UPDATE games SET name = ?, completed_at = ?, is_active = ? WHERE id = ?',
-      [game.name, game.completedAt || null, game.isActive ? 1 : 0, game.id]
+      [game.name, game.endDate || null, game.isComplete ? 0 : 1, game.id]
     );
   }
 
