@@ -1,166 +1,177 @@
 /**
  * 50 State License Plate Game
- * Main App Component
+ * Simple App without Navigation (to fix gesture handler issues)
  * 
  * @format
  */
 
-import React, { useEffect, useState } from 'react';
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View, Text, Button, Alert } from 'react-native';
+import React from 'react';
 import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-import { databaseManager } from './src/database/DatabaseManager';
-import { Game } from './src/models/types';
+  SafeAreaView,
+  Text,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  StatusBar,
+} from 'react-native';
+import { COLORS, SPACING, APP_CONFIG } from './src/utils/constants';
+import { ActiveGameScreen } from './src/screens/ActiveGameScreen';
+import { CreateGameScreen } from './src/screens/CreateGameScreen';
+import { GameHistoryScreen } from './src/screens/GameHistoryScreen';
+import { GameProvider } from './src/contexts/GameContext';
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [currentScreen, setCurrentScreen] = React.useState('main');
 
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-  const [isDbReady, setIsDbReady] = useState(false);
-  const [games, setGames] = useState<Game[]>([]);
-
-  useEffect(() => {
-    initializeDatabase();
-  }, []);
-
-  const initializeDatabase = async () => {
-    try {
-      await databaseManager.initialize();
-      setIsDbReady(true);
-      await loadGames();
-    } catch (error) {
-      console.error('Failed to initialize database:', error);
-      Alert.alert('Database Error', 'Failed to initialize database');
-    }
-  };
-
-  const loadGames = async () => {
-    try {
-      const gameRepo = databaseManager.getGameRepository();
-      const allGames = await gameRepo.getAllGames();
-      setGames(allGames);
-    } catch (error) {
-      console.error('Failed to load games:', error);
-    }
-  };
-
-  const createTestGame = async () => {
-    try {
-      const gameRepo = databaseManager.getGameRepository();
-      const newGame = await gameRepo.createGame({
-        name: `Test Game ${Date.now()}`,
-        startDate: new Date().toISOString(),
-        startLocation: 'New York',
-        destination: 'California',
-        isComplete: false,
-      });
+  const renderMainScreen = () => (
+    <View style={styles.content}>
+      <Text style={styles.title}>{APP_CONFIG.name}</Text>
+      <Text style={styles.subtitle}>Track license plates from all 50 states</Text>
       
-      Alert.alert('Success', `Created game: ${newGame.name}`);
-      await loadGames();
-    } catch (error) {
-      console.error('Failed to create game:', error);
-      Alert.alert('Error', 'Failed to create game');
-    }
-  };
+      <TouchableOpacity
+        style={styles.primaryButton}
+        onPress={() => setCurrentScreen('create')}
+      >
+        <Text style={styles.primaryButtonText}>Create New Game</Text>
+      </TouchableOpacity>
 
-  if (!isDbReady) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.loadingText}>Initializing Database...</Text>
-      </View>
-    );
-  }
+      <TouchableOpacity
+        style={styles.secondaryButton}
+        onPress={() => setCurrentScreen('active')}
+      >
+        <Text style={styles.secondaryButtonText}>Continue Game</Text>
+      </TouchableOpacity>
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>50 State License Plate Game</Text>
-        <Text style={styles.subtitle}>Database Layer Ready!</Text>
-      </View>
+      <TouchableOpacity
+        style={styles.secondaryButton}
+        onPress={() => setCurrentScreen('history')}
+      >
+        <Text style={styles.secondaryButtonText}>Game History</Text>
+      </TouchableOpacity>
       
-      <View style={styles.content}>
-        <Text style={styles.gamesCount}>Games: {games.length}</Text>
-        <Button title="Create Test Game" onPress={createTestGame} />
-        
-        {games.length > 0 && (
-          <View style={styles.gamesList}>
-            <Text style={styles.gamesListTitle}>Recent Games:</Text>
-            {games.slice(0, 3).map((game) => (
-              <Text key={game.id} style={styles.gameItem}>
-                {game.name} - {game.isComplete ? 'Complete' : 'Active'}
-              </Text>
-            ))}
-          </View>
-        )}
-      </View>
+      <Text style={styles.footerText}>
+        Start your journey to find all 50 state license plates!
+      </Text>
     </View>
+  );
+
+  const renderCreateScreen = () => (
+    <CreateGameScreen 
+      onBack={() => setCurrentScreen('main')}
+      onCreateGame={() => setCurrentScreen('active')}
+    />
+  );
+
+  const renderActiveScreen = () => (
+    <ActiveGameScreen onBack={() => setCurrentScreen('main')} />
+  );
+
+  const renderHistoryScreen = () => (
+    <GameHistoryScreen onBack={() => setCurrentScreen('main')} />
+  );
+
+  const renderCurrentScreen = () => {
+    switch (currentScreen) {
+      case 'create':
+        return renderCreateScreen();
+      case 'active':
+        return renderActiveScreen();
+      case 'history':
+        return renderHistoryScreen();
+      default:
+        return renderMainScreen();
+    }
+  };
+
+  return (
+    <GameProvider>
+      <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
+        {renderCurrentScreen()}
+      </SafeAreaView>
+    </GameProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
-  },
-  header: {
-    padding: 20,
-    paddingTop: 60,
-    backgroundColor: '#007AFF',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: 'white',
-    opacity: 0.9,
+    backgroundColor: COLORS.background,
   },
   content: {
     flex: 1,
-    padding: 20,
-    alignItems: 'center',
+    padding: SPACING.lg,
+    justifyContent: 'center',
   },
-  loadingText: {
-    fontSize: 18,
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: COLORS.text,
     textAlign: 'center',
-    marginTop: 100,
+    marginBottom: SPACING.sm,
   },
-  gamesCount: {
-    fontSize: 18,
-    marginBottom: 20,
-    fontWeight: '600',
+  subtitle: {
+    fontSize: 16,
+    color: COLORS.textSecondary,
+    textAlign: 'center',
+    marginBottom: SPACING.xl,
   },
-  gamesList: {
-    marginTop: 30,
-    width: '100%',
+  description: {
+    fontSize: 16,
+    color: COLORS.textSecondary,
+    textAlign: 'center',
+    marginBottom: SPACING.xl,
+    lineHeight: 24,
   },
-  gamesListTitle: {
+  info: {
+    fontSize: 14,
+    color: COLORS.textSecondary,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    marginTop: SPACING.lg,
+  },
+  backButton: {
+    alignSelf: 'flex-start',
+    marginBottom: SPACING.lg,
+  },
+  backButtonText: {
+    fontSize: 16,
+    color: COLORS.primary,
+  },
+  primaryButton: {
+    backgroundColor: COLORS.primary,
+    borderRadius: 8,
+    paddingVertical: SPACING.md,
+    paddingHorizontal: SPACING.lg,
+    alignItems: 'center',
+    marginBottom: SPACING.md,
+  },
+  primaryButtonText: {
     fontSize: 16,
     fontWeight: '600',
-    marginBottom: 10,
+    color: COLORS.background,
   },
-  gameItem: {
-    fontSize: 14,
-    marginBottom: 5,
-    padding: 10,
-    backgroundColor: 'white',
+  secondaryButton: {
+    backgroundColor: COLORS.surface,
     borderRadius: 8,
+    paddingVertical: SPACING.md,
+    paddingHorizontal: SPACING.lg,
+    alignItems: 'center',
+    marginBottom: SPACING.md,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+  },
+  secondaryButtonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: COLORS.text,
+  },
+  footerText: {
+    fontSize: 14,
+    color: COLORS.textSecondary,
+    textAlign: 'center',
+    lineHeight: 20,
+    marginTop: SPACING.lg,
   },
 });
 

@@ -116,13 +116,13 @@ User Settings {
 
 **Days 3-5: Data Layer**
 
-- [ ] Install and configure react-native-sqlite-storage
-  - [ ] Run `npm install react-native-sqlite-storage`
-  - [ ] Link native dependencies (if React Native < 0.60)
-  - [ ] Add iOS/Android permissions for file system access
-  - [ ] Test basic SQLite connection
-- [ ] Design database schema and create TypeScript models
-  - [ ] Define Game interface/type:
+- [x] Install and configure react-native-sqlite-storage
+  - [x] Run `npm install react-native-sqlite-storage`
+  - [x] Link native dependencies (if React Native < 0.60)
+  - [x] Add iOS/Android permissions for file system access
+  - [x] Test basic SQLite connection
+- [x] Design database schema and create TypeScript models
+  - [x] Define Game interface/type:
     ```typescript
     interface Game {
       id: string;
@@ -135,7 +135,7 @@ User Settings {
       createdAt: string;
     }
     ```
-  - [ ] Define SpottedState interface/type:
+  - [x] Define SpottedState interface/type:
     ```typescript
     interface SpottedState {
       id: string;
@@ -144,17 +144,17 @@ User Settings {
       spottedAt: string; // ISO timestamp
     }
     ```
-  - [ ] Create US_STATES constant array with all 50 states
-  - [ ] Create database configuration types and constants
-- [ ] Build database initialization service
-  - [ ] Create DatabaseService.ts class
-  - [ ] Implement database connection management
-  - [ ] Add database file path configuration
-  - [ ] Create database opening/closing methods
-  - [ ] Add error handling and logging
-- [ ] Write database schema creation scripts
-  - [ ] Create initializeDatabase() method
-  - [ ] Write Games table creation SQL:
+  - [x] Create US_STATES constant array with all 50 states
+  - [x] Create database configuration types and constants
+- [x] Build database initialization service
+  - [x] Create DatabaseService.ts class
+  - [x] Implement database connection management
+  - [x] Add database file path configuration
+  - [x] Create database opening/closing methods
+  - [x] Add error handling and logging
+- [x] Write database schema creation scripts
+  - [x] Create initializeDatabase() method
+  - [x] Write Games table creation SQL:
     ```sql
     CREATE TABLE IF NOT EXISTS games (
       id TEXT PRIMARY KEY,
@@ -167,7 +167,7 @@ User Settings {
       createdAt TEXT NOT NULL
     );
     ```
-  - [ ] Write SpottedStates table creation SQL:
+  - [x] Write SpottedStates table creation SQL:
     ```sql
     CREATE TABLE IF NOT EXISTS spotted_states (
       id TEXT PRIMARY KEY,
@@ -178,36 +178,36 @@ User Settings {
       UNIQUE(gameId, stateCode)
     );
     ```
-  - [ ] Add database indexes for performance
-  - [ ] Test database creation on both iOS and Android
-- [ ] Create data access layer (Repository pattern)
-  - [ ] Build GameRepository.ts:
-    - [ ] `createGame(game: Omit<Game, 'id' | 'createdAt'>): Promise<Game>`
-    - [ ] `getGameById(id: string): Promise<Game | null>`
-    - [ ] `getAllGames(): Promise<Game[]>`
-    - [ ] `updateGame(id: string, updates: Partial<Game>): Promise<void>`
-    - [ ] `deleteGame(id: string): Promise<void>`
-    - [ ] `getActiveGame(): Promise<Game | null>`
-    - [ ] `markGameComplete(id: string): Promise<void>`
-  - [ ] Build SpottedStateRepository.ts:
-    - [ ] `addSpottedState(gameId: string, stateCode: string): Promise<void>`
-    - [ ] `removeSpottedState(gameId: string, stateCode: string): Promise<void>`
-    - [ ] `getSpottedStatesForGame(gameId: string): Promise<SpottedState[]>`
-    - [ ] `getGameProgress(gameId: string): Promise<{ found: number; total: number }>`
-    - [ ] `isStateSpotted(gameId: string, stateCode: string): Promise<boolean>`
-- [ ] Add database versioning and migration system
-  - [ ] Create DatabaseMigrations.ts
-  - [ ] Implement version tracking table
-  - [ ] Add migration runner for schema changes
-  - [ ] Create rollback functionality (basic)
-  - [ ] Test migrations with sample data
-- [ ] Write comprehensive unit tests for data layer
-  - [ ] Test database connection and initialization
-  - [ ] Test all GameRepository methods with mock data
-  - [ ] Test all SpottedStateRepository methods
-  - [ ] Test error scenarios (database locked, invalid data)
-  - [ ] Test data persistence across app restarts
-  - [ ] Add test database cleanup utilities
+  - [x] Add database indexes for performance
+  - [x] Test database creation on both iOS and Android
+- [x] Create data access layer (Repository pattern)
+  - [x] Build GameRepository.ts:
+    - [x] `createGame(game: Omit<Game, 'id' | 'createdAt'>): Promise<Game>`
+    - [x] `getGameById(id: string): Promise<Game | null>`
+    - [x] `getAllGames(): Promise<Game[]>`
+    - [x] `updateGame(id: string, updates: Partial<Game>): Promise<void>`
+    - [x] `deleteGame(id: string): Promise<void>`
+    - [x] `getActiveGame(): Promise<Game | null>`
+    - [x] `markGameComplete(id: string): Promise<void>`
+  - [x] Build SpottedStateRepository.ts:
+    - [x] `addSpottedState(gameId: string, stateCode: string): Promise<void>`
+    - [x] `removeSpottedState(gameId: string, stateCode: string): Promise<void>`
+    - [x] `getSpottedStatesForGame(gameId: string): Promise<SpottedState[]>`
+    - [x] `getGameProgress(gameId: string): Promise<{ found: number; total: number }>`
+    - [x] `isStateSpotted(gameId: string, stateCode: string): Promise<boolean>`
+- [x] Add database versioning and migration system
+  - [x] Create DatabaseMigrations.ts
+  - [x] Implement version tracking table
+  - [x] Add migration runner for schema changes
+  - [x] Create rollback functionality (basic)
+  - [x] Test migrations with sample data
+- [x] Write comprehensive unit tests for data layer
+  - [x] Test database connection and initialization
+  - [x] Test all GameRepository methods with mock data
+  - [x] Test all SpottedStateRepository methods
+  - [x] Test error scenarios (database locked, invalid data)
+  - [x] Test data persistence across app restarts
+  - [x] Add test database cleanup utilities
 
 #### Week 2: Core Game Logic
 
