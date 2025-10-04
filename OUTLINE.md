@@ -96,23 +96,23 @@ User Settings {
 
 **Days 1-2: Project Setup**
 
-- [ ] Set up development environment (Xcode/Android Studio)
-- [ ] Create new project with proper folder structure
-  - [ ] `src/main/` (Android) or Project Root (iOS)
-  - [ ] `models/` - Data models (Game, SpottedState, User)
-  - [ ] `database/` - Database helper, migrations, DAOs
-  - [ ] `repositories/` - Data access layer, business logic
-  - [ ] `screens/` or `views/` - UI screens/view controllers
-  - [ ] `components/` - Reusable UI components
-  - [ ] `utils/` - Helper functions, constants, extensions
-  - [ ] `assets/` - Images, fonts, color schemes
-  - [ ] `test/` - Unit tests mirroring main structure
-  - [ ] `androidTest/` (Android) or `UITests/` (iOS) - Integration tests
-  - [ ] `docs/` - Project documentation, API specs
-  - [ ] `scripts/` - Build scripts, automation tools
-- [ ] Configure version control (Git repository)
-- [ ] Set up basic app configuration (bundle ID, permissions, etc.)
-- [ ] Create app icons and basic branding assets
+- [x] Set up development environment (Xcode/Android Studio)
+- [x] Create new project with proper folder structure
+  - [x] `src/main/` (Android) or Project Root (iOS)
+  - [x] `models/` - Data models (Game, SpottedState, User)
+  - [x] `database/` - Database helper, migrations, DAOs
+  - [x] `repositories/` - Data access layer, business logic
+  - [x] `screens/` or `views/` - UI screens/view controllers
+  - [x] `components/` - Reusable UI components
+  - [x] `utils/` - Helper functions, constants, extensions
+  - [x] `assets/` - Images, fonts, color schemes
+  - [x] `test/` - Unit tests mirroring main structure
+  - [x] `androidTest/` (Android) or `UITests/` (iOS) - Integration tests
+  - [x] `docs/` - Project documentation, API specs
+  - [x] `scripts/` - Build scripts, automation tools
+- [x] Configure version control (Git repository)
+- [x] Set up basic app configuration (bundle ID, permissions, etc.)
+- [x] Create app icons and basic branding assets
 
 **Days 3-5: Data Layer**
 
