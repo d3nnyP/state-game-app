@@ -133,8 +133,8 @@ export function GameProvider({ children }: GameProviderProps) {
       
       const completedGame = {
         ...currentGame,
-        completedAt: Date.now(),
-        isActive: false,
+        endDate: new Date().toISOString(),
+        isComplete: true,
       };
 
       await db.updateGame(completedGame);
@@ -172,7 +172,7 @@ export function GameProvider({ children }: GameProviderProps) {
       }
 
       // Activate the selected game
-      const resumedGame = { ...gameToResume, isActive: true };
+      const resumedGame = { ...gameToResume, isComplete: false };
       await db.updateGame(resumedGame);
       
       // Load the game and its states

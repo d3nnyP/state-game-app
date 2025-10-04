@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   StatusBar,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { COLORS, SPACING, APP_CONFIG } from './src/utils/constants';
 import { ActiveGameScreen } from './src/screens/ActiveGameScreen';
 import { CreateGameScreen } from './src/screens/CreateGameScreen';
@@ -84,12 +84,14 @@ function App() {
   };
 
   return (
-    <GameProvider>
-      <SafeAreaView style={styles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
-        {renderCurrentScreen()}
-      </SafeAreaView>
-    </GameProvider>
+    <SafeAreaProvider>
+      <GameProvider>
+        <SafeAreaView style={styles.container}>
+          <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
+          {renderCurrentScreen()}
+        </SafeAreaView>
+      </GameProvider>
+    </SafeAreaProvider>
   );
 }
 

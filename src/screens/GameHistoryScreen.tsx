@@ -9,7 +9,7 @@ import {
   Alert,
   RefreshControl,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS, SPACING } from '../utils/constants';
 import { useGame } from '../contexts/GameContext';
 import { Game } from '../models/types';
@@ -120,6 +120,7 @@ function GameItem({ game, onResume, onDelete, isComplete }: GameItemProps) {
 export function GameHistoryScreen({ onBack }: GameHistoryScreenProps) {
   const { allGames, isLoading, error, resumeGame, deleteGame, loadAllGames, currentGame } = useGame();
   const [refreshing, setRefreshing] = useState(false);
+  const insets = useSafeAreaInsets();
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -171,7 +172,7 @@ export function GameHistoryScreen({ onBack }: GameHistoryScreenProps) {
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + SPACING.xs }]}>
           <TouchableOpacity onPress={onBack} style={styles.backButton}>
             <Text style={styles.backButtonText}>← Back</Text>
           </TouchableOpacity>
@@ -188,7 +189,7 @@ export function GameHistoryScreen({ onBack }: GameHistoryScreenProps) {
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + SPACING.xs }]}>
           <TouchableOpacity onPress={onBack} style={styles.backButton}>
             <Text style={styles.backButtonText}>← Back</Text>
           </TouchableOpacity>
@@ -261,7 +262,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: SPACING.lg,
+    paddingHorizontal: SPACING.lg,
+    paddingBottom: SPACING.lg,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
   },

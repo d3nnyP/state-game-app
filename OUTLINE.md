@@ -28,47 +28,47 @@ A simple, intuitive mobile application for iOS and Android that digitizes the cl
 
 **Past Games Archive**
 
-- Chronological list of completed/paused games
-- Quick stats: completion percentage, duration, states found
-- Detailed view showing all spotted states with timestamps
+- [x] Chronological list of completed/paused games
+- [x] Quick stats: completion percentage, duration, states found
+- [x] Detailed view showing all spotted states with timestamps
 
 ### Statistics Dashboard
 
-- Total games played
-- Best completion percentage
-- Most commonly spotted states
-- Rarest states found
-- Personal records and achievements
+- [x] Total games played
+- [x] Best completion percentage
+- [x] Most commonly spotted states
+- [x] Rarest states found
+- [ ] Personal records and achievements
 
 ## User Experience Requirements
 
 ### Simplicity First
 
-- Minimal onboarding (2-3 screens max)
-- One-tap state marking
-- Offline functionality (no internet required during gameplay)
-- Large touch targets for easy use while traveling
+- [x] Minimal onboarding (2-3 screens max)
+- [x] One-tap state marking
+- [x] Offline functionality (no internet required during gameplay)
+- [x] Large touch targets for easy use while traveling
 
 ### Visual Design
 
-- Clean, modern interface
-- High contrast for outdoor visibility
-- Dark mode support
-- State abbreviations and full names
-- Color coding for found/unfound states
+- [x] Clean, modern interface
+- [x] High contrast for outdoor visibility
+- [ ] Dark mode support
+- [x] State abbreviations and full names
+- [x] Color coding for found/unfound states
 
 ## Technical Specifications
 
 ### Platform Support
 
-- **iOS**: iOS 14+ (iPhone and iPad)
-- **Android**: Android 8+ (API level 26+)
+- [x] **iOS**: iOS 14+ (iPhone and iPad)
+- [x] **Android**: Android 8+ (API level 26+)
 
 ### Architecture
 
 - Native development (Swift for iOS, Kotlin for Android) OR
-- Cross-platform framework (Flutter or React Native)
-- Local SQLite database for data storage
+- [x] Cross-platform framework (Flutter or React Native)
+- [x] Local SQLite database for data storage
 - Cloud sync optional (future enhancement)
 
 ### Core Data Models
@@ -309,8 +309,8 @@ User Settings {
 
 ### Phase 2: Enhanced UX (2-3 weeks)
 
-- [ ] Improved visual design and animations
-- [ ] Statistics dashboard
+- [x] Improved visual design and animations
+- [x] Statistics dashboard
 - [ ] Photo capture functionality
 - [ ] Dark mode implementation
 

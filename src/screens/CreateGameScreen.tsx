@@ -8,7 +8,7 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS, SPACING } from '../utils/constants';
 import { useGame } from '../contexts/GameContext';
 
@@ -19,7 +19,8 @@ interface CreateGameScreenProps {
 
 export function CreateGameScreen({ onBack, onCreateGame }: CreateGameScreenProps) {
   const [gameName, setGameName] = useState('');
-  const { createGame, isLoading, error } = useGame();
+  const { createGame } = useGame();
+  const insets = useSafeAreaInsets();
 
   const handleCreateGame = async () => {
     if (!gameName.trim()) {
@@ -48,7 +49,7 @@ export function CreateGameScreen({ onBack, onCreateGame }: CreateGameScreenProps
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
       
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + SPACING.xs }]}>
         <TouchableOpacity onPress={onBack} style={styles.backButton}>
           <Text style={styles.backButtonText}>← Back</Text>
         </TouchableOpacity>
@@ -107,7 +108,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: SPACING.lg,
+    paddingHorizontal: SPACING.lg,
+    paddingBottom: SPACING.lg,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
   },

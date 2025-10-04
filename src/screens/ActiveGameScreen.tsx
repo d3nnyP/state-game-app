@@ -9,7 +9,7 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS, SPACING, US_STATES } from '../utils/constants';
 import { useGame } from '../contexts/GameContext';
 
@@ -26,6 +26,7 @@ interface StateItem {
 export function ActiveGameScreen({ onBack }: ActiveGameScreenProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const { currentGame, spottedStates, toggleState, isLoading, error, completeGame } = useGame();
+  const insets = useSafeAreaInsets();
 
   const states: StateItem[] = US_STATES.map(state => ({
     ...state,
@@ -148,7 +149,7 @@ export function ActiveGameScreen({ onBack }: ActiveGameScreenProps) {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
       
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + SPACING.xs }]}>
         <TouchableOpacity onPress={onBack} style={styles.backButton}>
           <Text style={styles.backButtonText}>← Back</Text>
         </TouchableOpacity>
@@ -209,7 +210,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: SPACING.lg,
+    paddingHorizontal: SPACING.lg,
+    paddingBottom: SPACING.lg,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
   },
