@@ -1,4 +1,6 @@
 {
   "name": "StateGameApp",
-  "displayName": "StateGameApp"
+  "displayName": "50 State License Plate Game",
+  "version": "1.0.0",
+  "description": "A mobile app for tracking license plates from all 50 US states during road trips"
 }
