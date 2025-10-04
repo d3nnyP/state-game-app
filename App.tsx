@@ -7,13 +7,13 @@
 
 import React from 'react';
 import {
-  SafeAreaView,
   Text,
   StyleSheet,
   View,
   TouchableOpacity,
   StatusBar,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SPACING, APP_CONFIG } from './src/utils/constants';
 import { ActiveGameScreen } from './src/screens/ActiveGameScreen';
 import { CreateGameScreen } from './src/screens/CreateGameScreen';
